@@ -1,0 +1,75 @@
+jokepost-list:
+    path:   /
+    defaults: { _controller: AppBundle:JokePost:all }
+    methods:  [GET]
+
+api-register:
+    path:   /api/register
+    defaults: { _controller: AppBundle:User:registerApi }
+    methods: [POST]
+
+api-signin:
+    path:   /api/login
+    defaults: { _controller: AppBundle:APIKey:loginApi }
+    methods: [POST]
+
+api-comment:
+    path:   /api/jokepost/{id}/comment
+    defaults: { _controller: AppBundle:Comment:newApi }
+    methods: [POST]
+
+jokepost-add:
+    path:   /jokepost/new
+    methods: [GET, POST]
+    defaults: { _controller: AppBundle:JokePost:new }
+
+jokepost-like:
+    path:   /jokepost/{id}/like
+    defaults: { _controller: AppBundle:Vote:like }
+    requirements:
+        id: '\d+'
+
+jokepost-unlike:
+    path:   /jokepost/{id}/unlike
+    defaults: { _controller: AppBundle:Vote:unlike }
+    requirements:
+        id: '\d+'
+
+jokepost-one:
+    path:   /jokepost/{id}
+    defaults: { _controller: AppBundle:JokePost:one }
+    methods: [GET, POST]
+    requirements:
+        id: '\d+'
+
+api-jokepost-list:
+    path:   /api/jokepost/all
+    defaults: { _controller: AppBundle:JokePost:allApi }
+    methods:  [GET]
+
+api-jokepost-one:
+    path:   /api/jokepost/{id}
+    defaults: { _controller: AppBundle:JokePost:oneApi }
+    methods:  [GET]
+
+api-jokepost-new:
+    path:   /api/jokepost/new
+    defaults: { _controller: AppBundle:JokePost:newApi }
+    methods: [POST]
+
+api-jokepost-like:
+    path:   /api/jokepost/{id}/like
+    defaults: { _controller: AppBundle:Vote:likeApi }
+    methods:  [POST]
+    requirements:
+        id: '\d+'
+
+api-jokepost-unlike:
+    path:   /api/jokepost/{id}/unlike
+    defaults: { _controller: AppBundle:Vote:unlikeApi }
+    methods:  [POST]
+    requirements:
+        id: '\d+'
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

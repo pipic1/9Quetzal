@@ -1,0 +1,46 @@
+AppBundle\Entity\JokePost:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\JokePostRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        upvotes:
+            type: integer
+        downvotes:
+            type: integer
+        totalvotes:
+            type: integer
+        img:
+            type: string
+            length: 255
+        date:
+            type: datetime
+    oneToMany:
+        comments:
+            orderBy: { 'date': 'DESC' }
+            targetEntity: Comment
+            mappedBy: jokepost
+            joinColumn:
+                name: comment_id
+                referencedColumnName: id
+        votes:
+            targetEntity: Vote
+            mappedBy: jokepost
+            joinColumn:
+                name: vote_id
+                referencedColumnName: id
+    manyToOne:
+        author:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

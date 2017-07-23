@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default navbar-static-top navbar-inverse default">
+    <div class="container">
+            <a href="{{ path('jokepost-list') }}"><img src="https://bower.io/img/bower-logo.svg" class="pull-left" style="height: 60px;"/></a>
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{{ path('jokepost-list') }}">9Quetzal</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if app.user is null %}
+            <li class="navbar-right">
+                <a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-user" style="margin-right: 10px;"></span>Login</a>
+            </li>
+            <li class="navbar-right">
+                <a href="{{ path('fos_user_registration_register') }}">Register</a>
+            </li>
+            {% else %}
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" style="margin-right: 10px;"></span> {{app.user}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('jokepost-add') }}">Create Post</a></li>
+                        <li><a href="{{ path('jokepost-list') }}">List Posts</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}" style="color:red;">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% endif %}
+    </ul>
+</div>
+</nav>

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+
+        {% for message in app.session.flashBag.get('like') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% for message in app.session.flashBag.get('unlike') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% for message in app.session.flashBag.get('comment') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        <h1 style="text-align:center;">{{ joke.title }} by {{ joke.author.username }}</h1>
+        <div>
+            <img src="{{ asset('uploads/jokepost/' ~ joke.img) }}" style="width: 100%; max-width: 100%;">
+
+            {% if joke.totalvotes != 0 %}
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{ joke.totalvotes ==  0 ? 0: (joke.upvotes / joke.totalvotes)*100}}%;">
+                    {{joke.upvotes}} likes
+                </div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:{{ joke.totalvotes ==  0 ? 0: (joke.downvotes / joke.totalvotes)*100}}%;">
+                    {{joke.downvotes}} dislikes
+                </div>
+            </div>
+            {% endif %}
+            
+            <a href="{{ path('jokepost-like', {'id': joke.id }) }}">Like</a>
+            <a href="{{ path('jokepost-unlike', {'id': joke.id }) }}" style="float:right;">Dislike</a>
+
+            <div class="row">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.content, { 'attr': {'class': 'form-control','placeholder':'Comment'} })}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.save, { 'attr': {'class': 'btn btn-primary  btn-sm'} })}}
+                </div>
+                {{ form_end(form) }}
+            </div>
+
+            {% for comment in joke.comments %}
+            <div class="row">
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        {{ comment.user.username }} - {{ comment.date|date("F jS \\a\\t g:ia") }}
+                    </div>
+                    <div class="panel-footer">{{ comment.content }} </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

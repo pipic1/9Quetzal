@@ -1,0 +1,38 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+    #service_name:
+    #    class: AppBundle\Directory\ClassName
+    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    app.encoder.json:
+        class: 'Symfony\Component\Serializer\Encoder\JsonEncoder'
+
+    app.normalizer.credentials:
+        class: 'AppBundle\Service\CredentialsNormalizer'
+
+    app.normalizer.apikey:
+        class: 'AppBundle\Service\APIKeyNormalizer'
+
+    app.normalizer.user:
+        class: 'AppBundle\Service\UserNormalizer'
+
+    app.normalizer.jokepost:
+        class: 'AppBundle\Service\JokePostNormalizer'
+
+    app.normalizer.comment:
+        class: 'AppBundle\Service\CommentNormalizer'
+
+    app.serializer.default:
+        class: 'Symfony\Component\Serializer\Serializer'
+        arguments:
+            0:
+                - '@app.normalizer.credentials'
+                - '@app.normalizer.apikey'
+                - '@app.normalizer.user'
+                - '@app.normalizer.jokepost'
+                - '@app.normalizer.comment'
+            1:
+                - '@app.encoder.json'
